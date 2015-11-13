@@ -15,8 +15,13 @@ int lowThreshold;
 int const max_lowThreshold = 100;
 int ratio = 3;
 int kernel_size = 3;
-char *window_name = "Edge Map";
+char *window_name = "Vision Test";
 char *filename = "/home/noah/Pictures/SampleImages/image.jpg";
+
+// Used for distance calculations
+float const knownWidth = 7.0; // The known length of the objects
+float const focalLength = 1.0; // The focal length of the camera
+float const perWidth = 1.0; // The perceived width in pixels of the object
 
 /**
  * @function CannyThreshold
@@ -32,19 +37,20 @@ void CannyThreshold(int, void *) {
   /// Using Canny's output as a mask, we display our result
   dst = Scalar::all(0);
 
+  //double distanceToTote = findDistance();
+
   src.copyTo(dst, detected_edges);
   imshow(window_name, dst);
 }
 
-double findDistance(float focalLength, float objectHeightMm, float imageHeight, float objectHeightPx, float sensorHeight) {
+double findDistance(float knownWidth, float focalLength, float perWidth) {
   /*
   distance to object (mm) = focal length (mm) * real height of the object (mm) * image height (pixels)
                           ---------------------------------------------------------------------------
                                     object height (pixels) * sensor height (mm)
   */
 
-  return (focalLength * objectHeightMm * imageHeight) / (objectHeightPx * sensorHeight);
-  
+  return (knownWidth * focalLength) / perWidth; 
 }
 
 /** @function main */
