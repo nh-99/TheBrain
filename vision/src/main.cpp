@@ -19,8 +19,8 @@ char *window_name = "Vision Test";
 char *filename = "/home/noah/Pictures/SampleImages/image.jpg";
 
 // Used for distance calculations
-float const knownWidth = 7.0; // The known length of the objects
-float const focalLength = 1.0; // The focal length of the camera
+float const knownWidth = 7.0; // The known length of the objects(size of vision tape)
+float const focalLength = 7.9; // The focal length of the camera(in the case of my MacPro, it is 7.9mm)
 float const perWidth = 1.0; // The perceived width in pixels of the object
 
 /**
