@@ -310,7 +310,7 @@ int main( int argc, char** argv )
     int delay = 1000;
     clock_t prevTimestamp = 0;
     int mode = DETECTION;
-    int cameraId = 0;
+    int cameraId = 1;
     vector<vector<Point2f> > imagePoints;
     vector<string> imageList;
     Pattern pattern = CHESSBOARD;
