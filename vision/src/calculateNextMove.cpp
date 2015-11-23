@@ -3,6 +3,10 @@
 
 namespace std;
 
+void* calculateInnerVelocity();
+void* checkForAction();
+void* initiatePickup();
+
 void getNextMove(float distanceToGoal, float widthOfRobot, float outerWheelVelocity) {
     double innerVelocity = calculateInnerVelocity(distanceToGoal, widthOfRobot, outerWheelVelocity);
     checkForAction(distanceToGoal);
