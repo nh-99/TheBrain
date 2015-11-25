@@ -8,3 +8,6 @@ calibration:
 
 imagelist:
 	g++ $(config) tools/imagelist_creator.cpp $(config) -o bin/imagelist
+
+hsvdetect:
+	g++ $(config) tools/hsv.cpp $(config) -o bin/hsv
