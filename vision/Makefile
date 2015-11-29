@@ -11,3 +11,6 @@ imagelist:
 
 hsvdetect:
 	g++ $(config) tools/hsv.cpp $(config) -o bin/hsv
+
+test:
+	g++ $(config) src/test.cpp $(config) -o bin/test
