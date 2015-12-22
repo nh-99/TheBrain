@@ -7,4 +7,4 @@ calibration:
 	g++ $(config) src/calibration.cpp $(config) -o bin/calibrate
 
 testalgorithms:
-	g++ -Isrc src/target.h src/target.cpp test/TestAlgorithms.cpp -o bin/algorithmtest
+	g++ -Isrc src/target.h src/target.cpp test/TestAlgorithm.cpp -o bin/algorithmtest
