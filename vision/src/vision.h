@@ -1,3 +1,6 @@
+#ifndef VISION_H
+#define VISION_H
+
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/opencv.hpp>
@@ -6,14 +9,14 @@
 #include <vector>
 #include <map>
 
+using namespace std;
 using namespace cv;
 
 class Vision {
-    private:
-        Mat applyHsvThreshold(Mat srcImage);
-        Mat applyConvexHull(Mat srcImage);
-        Mat applyMinusThreshold(Mat srcImage);
-        vector getImageContours(Mat srcImage);
     public:
-        map getValues(vector imageContours);
+        Mat applyHsvThreshold(Mat srcImage);
+        Mat applyCannyTransform(Mat srcImage);
+        vector<vector<Point> > getContours(Mat srcImage);
+        map<int, double> getResults(vector<vector<Point> > contours);
 };
+#endif
