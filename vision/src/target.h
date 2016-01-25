@@ -6,8 +6,6 @@
 
 class Target {
     public:
-        double initialAngleToRotate(double distanceOne, double distanceTwo);
-        double distanceToFinalRotation(double angleToRotate, double distanceOne);
-        double distanceToTote(double angleToRotate, double distanceOne);
+        double directDistanceToTarget(double targetFeet, double targetPixels, double fovPixels, double fovAngle);
 };
 #endif
