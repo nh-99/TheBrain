@@ -16,7 +16,7 @@ class Vision {
     public:
         Mat applyHsvThreshold(Mat srcImage);
         Mat applyCannyTransform(Mat srcImage);
-        vector<vector<Point> > getContours(Mat srcImage);
-        map<int, double> getResults(vector<vector<Point> > contours);
+        vector<Rect> getContours(Mat srcImage);
+        map<int, double> getResults(vector<Rect> zones);
 };
 #endif
