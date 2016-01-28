@@ -3,9 +3,9 @@
 
 Vision vt;
 Target target;
-double targetFeet = 1.75;
-double pixelWidth = 800;
-double fovAngle = 34.25;
+double targetFeet = 21;
+double pixelWidth = 640;
+double fovAngle = 59.7 / 2;
 
 int main(int argc, const char* argv[]) {
     Mat src = imread(argv[1], 1);

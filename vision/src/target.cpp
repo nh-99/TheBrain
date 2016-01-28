@@ -5,5 +5,5 @@
  */
 
 double Target::directDistanceToTarget(double targetFeet, double targetPixels, double fovPixels, double fovAngle) {
-    return (targetFeet * fovPixels) / (2 * targetPixels * tan(fovAngle));
+    return (targetFeet * fovPixels) / (2 * targetPixels * (tan(fovAngle) * (PI / 180)));
 }

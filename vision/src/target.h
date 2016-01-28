@@ -1,5 +1,6 @@
 #ifndef TARGET_H
 #define TARGET_H
+#define PI 3.14159265
 
 #include <stdlib.h>
 #include <math.h>
