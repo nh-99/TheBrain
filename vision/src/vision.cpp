@@ -1,9 +1,9 @@
 #include "vision.h"
 
 int thresh = 100;
-RNG rng(12345);
+//RNG rng(12345);
 int max_thresh = 255;
-int w_filter = 70;
+int a_filter = 0;
 
 Mat Vision::applyHsvThreshold(Mat srcImage) {
     Mat hsv_image, threshold, toReturn; // The material that the function will return
@@ -37,7 +37,8 @@ vector<Rect> Vision::getContours(Mat srcImage) {
 
     for(int i = 0; i < contours.size(); i++) {
         approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
-        boundRect[i] = boundingRect(Mat(contours_poly[i]));
+        Rect boundingBoxOfPoly = boundingRect(Mat(contours_poly[i]));
+        boundRect.push_back(boundingBoxOfPoly);
     }
     return boundRect;
 }
