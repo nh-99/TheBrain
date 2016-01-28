@@ -3,7 +3,7 @@
 int thresh = 100;
 //RNG rng(12345);
 int max_thresh = 255;
-int a_filter = 0;
+int w_filter = 100;
 
 Mat Vision::applyHsvThreshold(Mat srcImage) {
     Mat hsv_image, threshold, toReturn; // The material that the function will return
@@ -43,8 +43,18 @@ vector<Rect> Vision::getContours(Mat srcImage) {
     return boundRect;
 }
 
-map<int, double> Vision::getResults(vector<Rect> zones) {
-    map<int, double> toReturn;
-
+vector<map<int, double> > Vision::getResults(vector<Rect> zones) {
+    vector<map<int, double> > toReturn;
+    for(int i = 0; i < zones.size(); i++) {
+        if(zones[i].width > w_filter) { // Filter the objects by width before returning the values
+            map<int, double> zoneValues;
+            zoneValues[0] = zones[i].width;
+            zoneValues[1] = zones[i].height;
+            zoneValues[2] = (zones[i].height * zones[i].width);
+            zoneValues[3] = ((zones[i].x + zones[i].width) / 2);
+            zoneValues[4] = ((zones[i].y + zones[i].height) / 2);
+            toReturn.push_back(zoneValues);
+        }
+    }
     return toReturn;
 }
