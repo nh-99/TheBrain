@@ -1,7 +1,7 @@
 #include "vision.h"
 
 int thresh = 100;
-//RNG rng(12345);
+RNG rng(12345);
 int max_thresh = 255;
 int w_filter = 100;
 
