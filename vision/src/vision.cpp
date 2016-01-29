@@ -3,7 +3,7 @@
 int thresh = 100;
 RNG rng(12345);
 int max_thresh = 255;
-int w_filter = 100;
+int w_filter = 30;
 
 Mat Vision::applyHsvThreshold(Mat srcImage) {
     Mat hsv_image, threshold, toReturn; // The material that the function will return
