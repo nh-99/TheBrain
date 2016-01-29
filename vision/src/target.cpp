@@ -4,6 +4,6 @@
  * Created by Noah Howard
  */
 
-double directDistanceToTarget(double targetFeet, double targetPixels, double fovPixels, double fovAngle) {
-    return (targetFeet * fovPixels) / (2 * targetPixels * tan(fovAngle));
+double Target::directDistanceToTarget(double targetFeet, double targetPixels, double fovPixels, double fovAngle) {
+    return (targetFeet * fovPixels) / (2 * targetPixels * tan(fovAngle * (PI/180)));
 }
