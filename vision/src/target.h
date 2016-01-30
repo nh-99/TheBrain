@@ -8,5 +8,6 @@
 class Target {
     public:
         double directDistanceToTarget(double targetFeet, double targetPixels, double fovPixels, double fovAngle);
+        //
 };
 #endif

@@ -50,7 +50,7 @@ vector<map<int, double> > Vision::getResults(vector<Rect> zones) {
             map<int, double> zoneValues;
             zoneValues[0] = zones[i].width;
             zoneValues[1] = zones[i].height;
-            zoneValues[2] = (zones[i].height * zones[i].width);
+            zoneValues[2] = zones[i].area();
             zoneValues[3] = ((zones[i].x + zones[i].width) / 2);
             zoneValues[4] = ((zones[i].y + zones[i].height) / 2);
             toReturn.push_back(zoneValues);

@@ -14,7 +14,7 @@ int main(int argc, const char* argv[]) {
     vector<map<int, double> > results = vt.getResults(getRectangles);
     for(int i = 0; i < results.size(); i++) {
         map<int, double> resultMap = results[i];
-        double distance = target.directDistanceToTarget(targetFeet, resultMap[0], pixelWidth, fovAngle);
-        cout << abs(distance) << endl;
+        double distanceOne = target.directDistanceToTarget(targetFeet, resultMap[0], pixelWidth, fovAngle);
+        double distanceTwo = target.directDistanceToTarget(targetFeet, , pixelWidth, fovAngle);
     }
 }
