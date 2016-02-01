@@ -8,4 +8,4 @@ before_install:
 before_script:
     - wget https://raw.githubusercontent.com/jayrambhia/Install-OpenCV/master/Ubuntu/opencv_install.sh
     - chmod +x opencv_install.sh
-    - sudo ./opencv_install.sh
+    - sudo ./opencv_install.sh 2.4.9
