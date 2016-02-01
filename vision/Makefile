@@ -6,5 +6,5 @@ all:
 calibration:
 	g++ $(config) src/calibration.cpp $(config) -o bin/calibrate
 
-testalgorithms:
-	g++ -Isrc src/target.h src/target.cpp test/TestAlgorithm.cpp -o bin/algorithmtest
+targettest:
+	g++ $(config) -Isrc src/target.cpp src/vision.cpp test/target/TargetTest.cpp $(config) -o bin/TargetTest

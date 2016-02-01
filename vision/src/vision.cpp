@@ -19,7 +19,7 @@ Mat Vision::applyCannyTransform(Mat srcImage) {
     return cannyOutput;
 }
 
-vector<Rect> Vision::getContours(Mat srcImage) {
+vector<RotatedRect> Vision::getContours(Mat srcImage) {
     Mat threshold_output;
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
@@ -30,29 +30,24 @@ vector<Rect> Vision::getContours(Mat srcImage) {
     findContours(threshold_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 
     /// Approximate contours to polygons + get bounding rects and circles
-    vector<vector<Point> > contours_poly(contours.size());
-    vector<Rect> boundRect(contours.size());
-    vector<Point2f> center(contours.size());
-    vector<float> radius(contours.size());
+    vector<RotatedRect> minRect(contours.size());
 
     for(int i = 0; i < contours.size(); i++) {
-        approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
-        Rect boundingBoxOfPoly = boundingRect(Mat(contours_poly[i]));
-        boundRect.push_back(boundingBoxOfPoly);
+        minRect.push_back(minAreaRect(Mat(contours[i])));
     }
-    return boundRect;
+    return minRect;
 }
 
-vector<map<int, double> > Vision::getResults(vector<Rect> zones) {
+vector<map<int, double> > Vision::getResults(vector<RotatedRect> zones) {
     vector<map<int, double> > toReturn;
     for(int i = 0; i < zones.size(); i++) {
-        if(zones[i].width > w_filter) { // Filter the objects by width before returning the values
+        if(zones[i].size.width > w_filter) { // Filter the objects by width before returning the values
             map<int, double> zoneValues;
-            zoneValues[0] = zones[i].width;
-            zoneValues[1] = zones[i].height;
-            zoneValues[2] = zones[i].area();
-            zoneValues[3] = ((zones[i].x + zones[i].width) / 2);
-            zoneValues[4] = ((zones[i].y + zones[i].height) / 2);
+            zoneValues[0] = zones[i].size.width;
+            zoneValues[1] = zones[i].size.height;
+//            zoneValues[2] = zones[i].size().area();
+//            zoneValues[3] = ((zones[i].x + zones[i].width) / 2);
+//            zoneValues[4] = ((zones[i].y + zones[i].height) / 2);
             toReturn.push_back(zoneValues);
         }
     }
