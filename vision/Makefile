@@ -7,4 +7,5 @@ calibration:
 	g++ $(config) src/calibration.cpp $(config) -o bin/calibrate
 
 targettest:
+	cxxtestgen --error-printer -o test/target/TargetTest.cpp test/target/TargetTest.h
 	g++ $(config) -Isrc src/target.cpp src/vision.cpp test/target/TargetTest.cpp $(config) -o bin/TargetTest

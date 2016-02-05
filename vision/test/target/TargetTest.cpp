@@ -20,40 +20,40 @@ int main( int argc, char *argv[] ) {
     return status;
 }
 bool suite_TargetTest_init = false;
-#include "/home/noah/Documents/code/c++/TheBrain/vision/test/target/TargetTest.h"
+#include "/home/vision-tracking/code/TheBrain/vision/test/target/TargetTest.h"
 
 static TargetTest suite_TargetTest;
 
 static CxxTest::List Tests_TargetTest = { 0, 0 };
-CxxTest::StaticSuiteDescription suiteDescription_TargetTest( "TargetTest.h", 12, "TargetTest", suite_TargetTest, Tests_TargetTest );
+CxxTest::StaticSuiteDescription suiteDescription_TargetTest( "test/target/TargetTest.h", 15, "TargetTest", suite_TargetTest, Tests_TargetTest );
 
 static class TestDescription_suite_TargetTest_testLoadImage : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TargetTest_testLoadImage() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 14, "testLoadImage" ) {}
+ TestDescription_suite_TargetTest_testLoadImage() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 17, "testLoadImage" ) {}
  void runTest() { suite_TargetTest.testLoadImage(); }
 } testDescription_suite_TargetTest_testLoadImage;
 
 static class TestDescription_suite_TargetTest_testHsvImage : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TargetTest_testHsvImage() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 23, "testHsvImage" ) {}
+ TestDescription_suite_TargetTest_testHsvImage() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 26, "testHsvImage" ) {}
  void runTest() { suite_TargetTest.testHsvImage(); }
 } testDescription_suite_TargetTest_testHsvImage;
 
 static class TestDescription_suite_TargetTest_testGetRectangles : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TargetTest_testGetRectangles() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 28, "testGetRectangles" ) {}
+ TestDescription_suite_TargetTest_testGetRectangles() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 31, "testGetRectangles" ) {}
  void runTest() { suite_TargetTest.testGetRectangles(); }
 } testDescription_suite_TargetTest_testGetRectangles;
 
 static class TestDescription_suite_TargetTest_testGetResults : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TargetTest_testGetResults() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 33, "testGetResults" ) {}
+ TestDescription_suite_TargetTest_testGetResults() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 36, "testGetResults" ) {}
  void runTest() { suite_TargetTest.testGetResults(); }
 } testDescription_suite_TargetTest_testGetResults;
 
 static class TestDescription_suite_TargetTest_testDistanceValues : public CxxTest::RealTestDescription {
 public:
- TestDescription_suite_TargetTest_testDistanceValues() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 38, "testDistanceValues" ) {}
+ TestDescription_suite_TargetTest_testDistanceValues() : CxxTest::RealTestDescription( Tests_TargetTest, suiteDescription_TargetTest, 41, "testDistanceValues" ) {}
  void runTest() { suite_TargetTest.testDistanceValues(); }
 } testDescription_suite_TargetTest_testDistanceValues;
 
