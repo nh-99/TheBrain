@@ -5,6 +5,8 @@ RNG rng(12345);
 int max_thresh = 255;
 int w_filter = 30;
 
+double getHeight(double, double, double, double);
+
 Mat Vision::applyHsvThreshold(Mat srcImage) {
     Mat hsv_image, threshold, toReturn; // The material that the function will return
     medianBlur(srcImage, srcImage, 3);
@@ -19,7 +21,7 @@ Mat Vision::applyCannyTransform(Mat srcImage) {
     return cannyOutput;
 }
 
-vector<Rect> Vision::getContours(Mat srcImage) {
+vector<RotatedRect> Vision::getContours(Mat srcImage) {
     Mat threshold_output;
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
@@ -28,33 +30,32 @@ vector<Rect> Vision::getContours(Mat srcImage) {
     threshold(srcImage, threshold_output, thresh, 255, THRESH_BINARY);
     /// Find contours
     findContours(threshold_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
-
-    /// Approximate contours to polygons + get bounding rects and circles
-    vector<vector<Point> > contours_poly(contours.size());
-    vector<Rect> boundRect(contours.size());
-    vector<Point2f> center(contours.size());
-    vector<float> radius(contours.size());
+    vector<RotatedRect> minRect(contours.size());
 
     for(int i = 0; i < contours.size(); i++) {
-        approxPolyDP(Mat(contours[i]), contours_poly[i], 3, true);
-        Rect boundingBoxOfPoly = boundingRect(Mat(contours_poly[i]));
-        boundRect.push_back(boundingBoxOfPoly);
+        minRect.push_back(minAreaRect(Mat(contours[i])));
     }
-    return boundRect;
+    return minRect;
 }
 
-vector<map<int, double> > Vision::getResults(vector<Rect> zones) {
+vector<map<int, double> > Vision::getResults(vector<RotatedRect> zones) {
     vector<map<int, double> > toReturn;
     for(int i = 0; i < zones.size(); i++) {
-        if(zones[i].width > w_filter) { // Filter the objects by width before returning the values
+        if(zones[i].size.width > w_filter) { // Filter the objects by width before returning the values
             map<int, double> zoneValues;
-            zoneValues[0] = zones[i].width;
-            zoneValues[1] = zones[i].height;
-            zoneValues[2] = zones[i].area();
-            zoneValues[3] = ((zones[i].x + zones[i].width) / 2);
-            zoneValues[4] = ((zones[i].y + zones[i].height) / 2);
+            Point2f rectPoints[4];
+            zones[i].points(rectPoints);
+            zoneValues[0] = zones[i].size.width;
+            zoneValues[1] = zones[i].size.height;
+            zoneValues[2] = zones[i].size.area();
+            zoneValues[3] = getHeight(rectPoints[0].x, rectPoints[1].x, rectPoints[0].y, rectPoints[1].y);
+            zoneValues[4] = getHeight(rectPoints[2].x, rectPoints[3].x, rectPoints[2].y, rectPoints[3].y);
             toReturn.push_back(zoneValues);
         }
     }
     return toReturn;
+}
+
+double getHeight(double x1, double x2, double y1, double y2) {
+    return sqrt(pow(x2-x1,2) + pow(y2-y1,2));
 }

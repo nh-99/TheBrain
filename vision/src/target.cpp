@@ -9,7 +9,7 @@ double Target::directDistanceToTarget(double targetFeet, double targetPixels, do
 }
 
 double Target::getInitialAngle(double targetLength, double distanceOne, double distanceTwo) {
-    return acos((targetLength^2 + distanceOne^2 - distanceTwo^2) / (2 * targetLength * distanceOne));
+    return acos((pow(targetLength, 2.0) + pow(distanceOne, 2.0) - pow(distanceTwo, 2.0)) / (2 * targetLength * distanceOne));
 }
 
 double Target::getLengthOne(double initialAngle, double distanceOne) {
@@ -21,11 +21,11 @@ double Target::getLengthTwo(double initialAngle, double distanceOne) {
 }
 
 double Target::getFirstDistanceToMove(double lengthOne, double lengthTwo, double distanceToRotate) {
-    return sqrt((lengthTwo - distanceToRotate)^2 + lengthOne);
+    return sqrt(pow((lengthTwo - distanceToRotate), 2.0) + lengthOne);
 }
 
 double Target::getFirstAngleToRotate(double distanceToRotate, double firstDistanceToMove, double distanceOne) {
-    return acos((distanceToRotate^2 - firstDistanceToMove^2 - distanceOne^2) / (-2 * firstDistanceToMove * distanceOne));
+    return acos((pow(distanceToRotate, 2.0) - pow(firstDistanceToMove, 2) - pow(distanceOne, 2)) / (-2 * firstDistanceToMove * distanceOne));
 }
 
 double Target::getFinalAngle(double initialAngle, double firstAngleToRotate) {
