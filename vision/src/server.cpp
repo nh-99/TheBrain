@@ -1,42 +1,28 @@
-#include "vision.h"
-#include "target.h"
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <errno.h>
+#include <stdlib.h>
 #include <iostream>
 #include <thread>
 #include "rapidjson/document.h"
+#include "main.h"
 
-Vision vt;
-Target target;
-double targetFeet = 20;
-double pixelWidth = 640;
-double fovAngle = 59.7 / 2;
+using namespace std;
+
 rapidjson::Document jsonData;
 int sock;
-int port = 5000;
+int port;
 int bytes_read;
 socklen_t addr_len;
 char recv_data[1024];
 struct sockaddr_in server_addr , client_addr;
 
-void processImage(string imageFile) {
-    Mat src = imread(imageFile, 1);
-    Mat hsv_image = vt.applyHsvThreshold(src);
-    vector<RotatedRect> getRectangles = vt.getContours(hsv_image);
-    vector<map<int, double> > results = vt.getResults(getRectangles);
-    for(int i = 0; i < results.size(); i++) {
-        map<int, double> resultMap = results[i];
-        double distanceOne = target.directDistanceToTarget(targetFeet, resultMap[0], pixelWidth, fovAngle);
-//        double distanceTwo = target.directDistanceToTarget(targetFeet, resultMap[4], pixelWidth, fovAngle);
-        cout << distanceOne << endl;
-    }
-}
-
-int server() {
+int main() {
+    Main mainVt;
     if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
         perror("Socket");
         exit(1);
@@ -53,7 +39,7 @@ int server() {
     }
 
     addr_len = sizeof(struct sockaddr);
-    cout << "UDPServer Waiting for client on port 5000" << endl;
+    cout << "\nUDPServer Waiting for client on port 5000" << endl;
 
     while (1) {
         bytes_read = recvfrom(sock, recv_data, 1024, 0, (struct sockaddr *)&client_addr, &addr_len);
@@ -61,13 +47,8 @@ int server() {
         jsonData.Parse(recv_data);
         string image = jsonData["image"].GetString();
         if(jsonData["command"].GetString() == "Autonomous") {
-            thread t1(processImage, image);
-            t1.join();
+            thread t1(Main::run, image);
         }
     }
     return 0;
-}
-
-int main() {
-    server();
 }
