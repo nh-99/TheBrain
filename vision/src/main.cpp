@@ -9,12 +9,18 @@
 #include <iostream>
 #include <thread>
 #include "rapidjson/document.h"
+#include "client.h"
+#include <sstream>
 
 Vision vt;
 Target target;
+Client client;
+
 double targetFeet = 20;
 double pixelWidth = 640;
 double fovAngle = 59.7 / 2;
+
+stringstream ss;
 rapidjson::Document jsonData;
 int sock;
 int port = 5000;
@@ -32,7 +38,9 @@ void processImage(string imageFile) {
         map<int, double> resultMap = results[i];
         double distanceOne = target.directDistanceToTarget(targetFeet, resultMap[0], pixelWidth, fovAngle);
 //        double distanceTwo = target.directDistanceToTarget(targetFeet, resultMap[4], pixelWidth, fovAngle);
-        cout << distanceOne << endl;
+//        cout << distanceOne << endl;
+        ss << distanceOne;
+        client.send(ss.str().c_str());
     }
 }
 
