@@ -60,7 +60,7 @@ int server() {
         recv_data[bytes_read] = '\0'; // recv_data is the data to parse
         jsonData.Parse(recv_data);
         string image = jsonData["image"].GetString();
-        if(jsonData["command"].GetString() == "Autonomous") {
+        if(strcmp(jsonData["command"].GetString(), "Autonomous") == 0) {
             thread t1(processImage, image);
             t1.join();
         }
