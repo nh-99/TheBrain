@@ -10,11 +10,11 @@
 #include <netdb.h>
 #include "client.h"
 
-int Client::send(const char* message) {
+int Client::send(string message) {
     int sockfd;
     struct addrinfo hints, *servinfo, *p;
     int rv;
-    const char* port = "5000";
+    const char* port = "5001";
     int numbytes;
     const char* host = "localhost";
 
@@ -35,14 +35,17 @@ int Client::send(const char* message) {
         }
         break;
     }
+
     if (p == NULL) {
         fprintf(stderr, "talker: failed to create socket\n");
         return 2;
     }
-    if ((numbytes = sendto(sockfd, message, strlen(message), 0, p->ai_addr, p->ai_addrlen)) == -1) {
+
+    if ((numbytes = sendto(sockfd, message.c_str(), strlen(message.c_str()), 0, p->ai_addr, p->ai_addrlen)) == -1) {
         perror("talker: sendto");
         exit(1);
     }
+
     freeaddrinfo(servinfo);
     close(sockfd);
     return 0;

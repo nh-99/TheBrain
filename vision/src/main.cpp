@@ -40,7 +40,8 @@ void processImage(string imageFile) {
 //        double distanceTwo = target.directDistanceToTarget(targetFeet, resultMap[4], pixelWidth, fovAngle);
 //        cout << distanceOne << endl;
         ss << distanceOne;
-        client.send(ss.str().c_str());
+        thread clientThread(&Client::send, Client(), ss.str());
+        clientThread.join();
     }
 }
 
