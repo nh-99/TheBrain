@@ -4,4 +4,4 @@ script: cd vision && make targettest && ./bin/TargetTest
 sudo: true
 before_install:
     - sudo apt-get update
-    - sudo apt-get -y install libopencv-dev
+    - sudo apt-get -y install libopencv-dev cxxtest
