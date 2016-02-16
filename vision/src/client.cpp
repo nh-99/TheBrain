@@ -15,11 +15,10 @@ int Client::send(string message) {
     struct addrinfo hints, *servinfo, *p;
     int rv;
     const char* port = "5001";
-    int numbytes;
     const char* host = "localhost";
 
     memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_UNSPEC;
+    hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_DGRAM;
 
     if ((rv = getaddrinfo(host, port, &hints, &servinfo)) != 0) {
@@ -41,12 +40,12 @@ int Client::send(string message) {
         return 2;
     }
 
-    if ((numbytes = sendto(sockfd, message.c_str(), strlen(message.c_str()), 0, p->ai_addr, p->ai_addrlen)) == -1) {
+    if ((sendto(sockfd, message.c_str(), strlen(message.c_str()), 0, p->ai_addr, p->ai_addrlen)) == -1) {
         perror("talker: sendto");
         exit(1);
     }
 
-    freeaddrinfo(servinfo);
+    freeaddrinfo(p);
     close(sockfd);
     return 0;
 }
