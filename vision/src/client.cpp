@@ -11,41 +11,22 @@
 #include "client.h"
 
 int Client::send(string message) {
-    int sockfd;
-    struct addrinfo hints, *servinfo, *p;
-    int rv;
-    const char* port = "5001";
-    const char* host = "localhost";
+    int sock;
+    struct sockaddr_in server_addr;
+    struct hostent *host;
 
-    memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_DGRAM;
+    host = (struct hostent *) gethostbyname((char *) "localhost");
 
-    if ((rv = getaddrinfo(host, port, &hints, &servinfo)) != 0) {
-        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
-        return 1;
-    }
-
-    // loop through all the results and make a socket
-    for(p = servinfo; p != NULL; p = p->ai_next) {
-        if ((sockfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) == -1) {
-            perror("talker: socket");
-            continue;
-        }
-        break;
-    }
-
-    if (p == NULL) {
-        fprintf(stderr, "talker: failed to create socket\n");
-        return 2;
-    }
-
-    if ((sendto(sockfd, message.c_str(), strlen(message.c_str()), 0, p->ai_addr, p->ai_addrlen)) == -1) {
-        perror("talker: sendto");
+    if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
+        perror("socket");
         exit(1);
     }
 
-    freeaddrinfo(p);
-    close(sockfd);
-    return 0;
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(5001);
+    server_addr.sin_addr = *((struct in_addr *)host->h_addr);
+    bzero(&(server_addr.sin_zero), 8);
+
+    sendto(sock, message.c_str(), strlen(message.c_str()), 0, (struct sockaddr *)&server_addr, sizeof(struct sockaddr));
+    close(sock);
 }

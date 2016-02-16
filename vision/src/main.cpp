@@ -41,8 +41,7 @@ void processImage(string imageFile) {
 //        cout << distanceOne << endl;
         ss << distanceOne;
         client.send(ss.str());
-        //thread clientThread(&Client::send, Client(), ss.str());
-        //clientThread.join();
+        ss.str(string());
     }
 }
 

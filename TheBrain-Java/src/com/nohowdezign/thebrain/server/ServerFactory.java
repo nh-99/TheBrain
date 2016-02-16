@@ -22,10 +22,9 @@ public abstract class ServerFactory {
 	
 	protected void start() throws IOException {
 		while(true) {
-			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-			this.getServerSocket().receive(receivePacket);
-			String sentance = null;
-			sentance = new String(receivePacket.getData());
+			DatagramPacket packet = new DatagramPacket(receiveData, receiveData.length);
+			this.getServerSocket().receive(packet);
+			String sentance = new String(packet.getData(), packet.getOffset(), packet.getLength());
 			onMessage(sentance);
 		}
 	}
