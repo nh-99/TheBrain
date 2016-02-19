@@ -34,15 +34,24 @@ void processImage(string imageFile) {
     Mat hsv_image = vt.applyHsvThreshold(src);
     vector<RotatedRect> getRectangles = vt.getContours(hsv_image);
     vector<map<int, double> > results = vt.getResults(getRectangles);
+    string targetJSON = "{\"targets\":[";
+    string targetArray = "";
     for(int i = 0; i < results.size(); i++) {
+        if(i != 0) {
+            targetArray = targetArray + ",";
+        }
         map<int, double> resultMap = results[i];
         double distanceOne = target.directDistanceToTarget(targetFeet, resultMap[0], pixelWidth, fovAngle);
-//        double distanceTwo = target.directDistanceToTarget(targetFeet, resultMap[4], pixelWidth, fovAngle);
-//        cout << distanceOne << endl;
+        // Construct JSON array to send to the client (RIO)
+        ss << i;
+        targetArray = targetArray + "{\"targetID\":\"" + ss.str() + "\",";
+        ss.str(string());
         ss << distanceOne;
-        client.send(ss.str());
+        targetArray = targetArray + "\"distance\":\"" + ss.str() + "\"}";
         ss.str(string());
     }
+    targetJSON = targetJSON + targetArray + "]}";
+    client.send(targetJSON);
 }
 
 int server() {
